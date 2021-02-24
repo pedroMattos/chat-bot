@@ -1,0 +1,23 @@
+{
+  "name": "chat-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sonny.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedroMattos/chat-bot.git"
+  },
+  "author": "Pedro Mattos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedroMattos/chat-bot/issues"
+  },
+  "homepage": "https://github.com/pedroMattos/chat-bot#readme",
+  "dependencies": {
+    "brain.js": "^2.0.0-beta.2",
+    "file-system": "^2.2.2"
+  }
+}

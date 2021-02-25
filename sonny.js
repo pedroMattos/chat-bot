@@ -3,7 +3,7 @@ const readline = require('readline')
 const brain = require('brain.js')
 const net = new brain.recurrent.LSTM()
 
-let array = []
+let array
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -24,25 +24,32 @@ fs.readFile('learned.json', (err, data) => {
 
 const train = () => {
   console.log('treinando sonny...')
-  fs.readFile('intentes.txt', (err, data) => {
-    array = data.toString().split('.')
-    console.log(array)
-    net.train(array, {
-      iterations: 200,
-      log: true,
-      errorThresh: 0.01
+  fs.readFile('intents.json', (err, data) => {
+    array = data.toString()
+    let jsonFile = JSON.parse(array)
+    let inOuts = []
+    jsonFile.intents.forEach(element => {
+      if (element.tag == 'greeting') {
+        for (let i = 0; i < element.input.length; i++) {
+          inOuts.push({
+            input: element.input[i],
+            output: element.output[i]
+          })
+        }
+      }
     });
+    console.log(inOuts)    
+    net.train(inOuts);
     fs.writeFileSync('learned.json', JSON.stringify(net.toJSON()), (err, result) => {
       if (err) return console.log(err)
-      console.log(result)
     })
     console.log('Treinamento finalizado')
   })
 }
 
 const boot = () => {
-  rl.question('Enter: ', (q) => {
-    console.log(net.run(q))
+  rl.question('Me: ', (q) => {
+    console.log(`Sonny: ${net.run(q)}`)
     boot();
   })
 }

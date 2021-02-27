@@ -34,7 +34,7 @@ const train = () => {
     let inOuts = []
     jsonFile.intents.forEach(element => {
       // tempo de treino 2 horas ou mais
-      if (element.tag == 'saudacoes' || element.tag == 'cardapio_opcoes' || element.tag == 'cardapio_escolhas') {
+      if (element.tag == 'saudacoes') {
         for (let i = 0; i < element.input.length; i++) {
           inOuts.push({
             input: element.input[i],

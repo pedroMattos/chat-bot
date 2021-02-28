@@ -1,0 +1,39 @@
+{"intents": [
+  {"tag": "greetings",
+    "input": [
+      "oi",
+      "olá",
+      "hey"
+    ],
+    "output": [
+      "Olá! Como posso lhe ajudar?",
+      "Oi! Tudo bem contigo? Espero que sim :) em que posso lhe ajudar?",
+      "Ho, let's go! Posso lhe ajudar em algo?"
+    ]
+  },
+  {"tag": "cardapio_opcoes",
+    "input": [
+      "no que pode me ajudar?",
+      "pode me ajudar?",
+      "poderia me mostrar o cardapio?"
+    ],
+    "output": [
+      "Bom, eu tenho um serviços disponivel na minha base de dados:\n Cardápio\n",
+      "No momento eu posso lhe oeferecer o nosso Cardápio: ",
+      "Nosso cardápio atualmente tem:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?"
+    ]
+  },
+  {"tag": "testeArquivo",
+    "input": [
+      "t",
+      "t",
+      "t"
+    ],
+    "output": [
+      "rr",
+      "rr",
+      "rr"
+    ]
+  }
+]
+}

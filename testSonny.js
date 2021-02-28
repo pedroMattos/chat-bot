@@ -62,6 +62,42 @@ class Sonny {
     }
 
     /**
+     * 
+     * @param {String} dir Parâmetro recebe o diretório onde serão gravadas as intents aprendidas por Sonny
+     * @param {Array<String>} intentTags Recebe as intents já filtradas para nomear os arquivos aprendidos
+     * por Sonny
+     */
+    Sonny.prototype.trainMany = (dir, intentTags) => {
+      fs.readFile('testeIntents.json', (err, data) => {
+        let jsonFile = JSON.parse(data.toString())
+        jsonFile.intents.forEach(element => {
+          let inouts = []
+          let trained = null
+          for (let i = 0; i < intentTags.length; i++) {
+            if (element.tag == intentTags[i]) {
+              trained = intentTags[i]
+              for (let j = 0; j < element.input.length; j++) {
+                inouts.push({
+                  input: element.input[j],
+                  output: element.output[j]
+                })
+              }
+            }
+          }
+          net.train(inouts, {
+            log: true,
+            iterations: this.numberIterations
+          });
+
+          fs.writeFileSync(dir + trained + '.json', JSON.stringify(net.toJSON()), (err, result) => {
+            if (err) return console.log(err)
+            console.log('Treinamento finalizado para', trained)
+          })
+        })
+      })
+    }
+
+    /**
      * @param {String} task A task sempre deve ser igual ao valor da variável option
      * @returns
      */
@@ -74,7 +110,15 @@ class Sonny {
 
       // Bloqueia a execução enquanto houver uma intentTag com o mesmo nome de uma learned já existente
       Promise.resolve(Sonny.prototype.BlankFile(existingIntents)).then(() => {
-        console.log('terminou')
+        switch (task) {
+          case 'learn':
+            Sonny.prototype.trainMany(this.intentsDir, listOfIntents)
+            break;
+          case 'execute':
+            return console.log('booting Sonny')
+          default:
+            return console.log('learning...')
+        }
       })
       // return console.log('executando tarefa', task)
     }
@@ -112,21 +156,24 @@ class Sonny {
     }
 
     Sonny.prototype.BlankFile = async (file) => {
+      let arrayOfIntents = []
       if (file.length > 0) {
         for (let i = 0; i < file.length; i++) {
           let fileBuffer = fs.readFileSync(this.intentsDir + file[i] + '.json')
           if (fileBuffer.toString() === '') {
-            return console.log('Sonny será treinado agora!', file[i])
+            arrayOfIntents.push(file[i])
           } else {
             throw new Error(`As seguintes intents já foram aprendidas por Sonny '${file[i]}', 
             caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
           }
         }
+        console.log(arrayOfIntents)
       } else {
         return;
       }
     }
 
+    // Retorno principal da Class Sonny
     return {
       // Treina o Sonny com intentTag validas
       train: () => {
@@ -149,7 +196,7 @@ class Sonny {
 }
 
 // ambiente de teste
-let arrayIntents = ['saudacoes', 'negativas', 'testeArquivo']
+let arrayIntents = ['greetings', 'cardapio_opcoes']
 
-let sonny = new Sonny(null, arrayIntents)
+let sonny = new Sonny(null, arrayIntents, 200)
 sonny.train()

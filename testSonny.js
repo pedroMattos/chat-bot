@@ -114,15 +114,13 @@ class Sonny {
     Sonny.prototype.BlankFile = async (file) => {
       if (file.length > 0) {
         for (let i = 0; i < file.length; i++) {
-          fs.readFile(this.intentsDir + file[i] + '.json', (err, data) => {
-            if (err) return console.log(err)
-            if (data.toString() === '') {
-              console.log('Sonny será treinado agora!', file[i])
-            } else {
-              throw new Error(`As seguintes intents já foram aprendidas por Sonny '${file[i]}', 
-              caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
-            }
-          })
+          let fileBuffer = fs.readFileSync(this.intentsDir + file[i] + '.json')
+          if (fileBuffer.toString() === '') {
+            return console.log('Sonny será treinado agora!', file[i])
+          } else {
+            throw new Error(`As seguintes intents já foram aprendidas por Sonny '${file[i]}', 
+            caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
+          }
         }
       } else {
         return;

@@ -73,11 +73,10 @@ class Sonny {
       let existingIntents = Sonny.prototype.fileTypeAndExistChecker(this.intentTag).existingIntents
 
       // Bloqueia a execução enquanto houver uma intentTag com o mesmo nome de uma learned já existente
-      if (existingIntents.length > 0) {
-        listOfIntents.push(Sonny.prototype.BlankFile(existingIntents, listOfIntents))
-      }
-      console.log(listOfIntents)
-      return console.log('executando tarefa', task)
+      Promise.resolve(Sonny.prototype.BlankFile(existingIntents)).then(() => {
+        console.log('terminou')
+      })
+      // return console.log('executando tarefa', task)
     }
 
     /**
@@ -112,17 +111,21 @@ class Sonny {
       return {newIntentsToLearn: newIntentsAvailable, existingIntents: blockedIntents}
     }
 
-    Sonny.prototype.BlankFile = (file, availableIntents) => {
-      for (let i = 0; i < file.length; i++) {
-        fs.readFile(this.intentsDir + file[i] + '.json', (err, data) => {
-          if (err) return console.log(err)
-          if (data.toString() === '') {
-            console.log('Sonny será treinado agora!', file[i])
-          } else {
-            throw new Error(`As seguintes intents já foram aprendidas por Sonny '${file[i]}', 
-            caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
-          }
-        })
+    Sonny.prototype.BlankFile = async (file) => {
+      if (file.length > 0) {
+        for (let i = 0; i < file.length; i++) {
+          fs.readFile(this.intentsDir + file[i] + '.json', (err, data) => {
+            if (err) return console.log(err)
+            if (data.toString() === '') {
+              console.log('Sonny será treinado agora!', file[i])
+            } else {
+              throw new Error(`As seguintes intents já foram aprendidas por Sonny '${file[i]}', 
+              caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
+            }
+          })
+        }
+      } else {
+        return;
       }
     }
 

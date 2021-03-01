@@ -23,7 +23,7 @@ node Sonny.js
 node testSonny.js
 ```
 
-Please, read the comments (documentation) in the code to use testSonny.js corretly. Bug report as issues are welcome.
+Please, read the comments (documentation) in the code to use testSonny.js correctly. Bug report as issues are welcome.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

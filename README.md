@@ -12,7 +12,7 @@ Use the package manage [npm](https://nodejs.org/en/download/) to install the dep
 npm install
 ```
 
-## Basic Usage
+## Basic Usage (Deprecrated)
 
 ```bash
 node Sonny.js
@@ -21,6 +21,11 @@ node Sonny.js
 ## Advanced Usage (Beta)
 ```bash
 node testSonny.js
+```
+
+## Advanced Usage (Beta)
+```bash
+node bootSonny.js
 ```
 
 Please, read the comments (documentation) in the code to use testSonny.js correctly. Bug report as issues are welcome.

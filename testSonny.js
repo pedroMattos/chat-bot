@@ -1,13 +1,8 @@
 
 const fs = require('fs')
-const readline = require('readline')
 const brain = require('brain.js')
 const net = new brain.recurrent.LSTM()
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 /**
  * @author Pedro Mattos
@@ -200,3 +195,5 @@ let arrayIntents = ['greetings', 'cardapio_opcoes']
 
 let sonny = new Sonny(null, arrayIntents, 200)
 sonny.train()
+
+module.exports = {Sonny}

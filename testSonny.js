@@ -158,8 +158,8 @@ class Sonny {
           if (fileBuffer.toString() === '') {
             arrayOfIntents.push(file[i])
           } else {
-            throw new Error(`As seguintes intents já foram aprendidas por Sonny '${file[i]}', 
-            caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
+            // throw new Error(`As seguintes intents já foram aprendidas por Sonny '${file[i]}', 
+            // caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
           }
         }
         console.log(arrayOfIntents)

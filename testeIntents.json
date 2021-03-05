@@ -3,37 +3,68 @@
     "input": [
       "oi",
       "olá",
-      "hey"
+      "hey",
+      "hello",
+      "alguem ai?",
+      "oi tudo bem?",
+      "tudo bem?",
+      "bom dia",
+      "oi bom dia",
+      "bom",
+      "boa tarde",
+      "boa noite"
     ],
     "output": [
       "Olá! Como posso lhe ajudar?",
       "Oi! Tudo bem contigo? Espero que sim :) em que posso lhe ajudar?",
-      "Ho, let's go! Posso lhe ajudar em algo?"
+      "Ho, let's go! Posso lhe ajudar em algo?",
+      "Hi there, how can I help? You would like to convert into english?",
+      "Sempre quando sou ligado, claro!",
+      "Opa! Tudo tranquilo por aqui, obrigado por perguntar :D no que posso lhe ajudar?",
+      "Tudo na medida do possivel, no que posso lhe ajudar?",
+      "Lhe desejo um ótimo dia também :D",
+      "Olá! Um ótimo dia para você também :D",
+      "Dia! XD",
+      "Boa tarde! Posso lhe ajudar em algo?",
+      "Boa noite, amigo! Em que posso lhe servir?"
     ]
   },
   {"tag": "cardapio_opcoes",
     "input": [
       "no que pode me ajudar?",
       "pode me ajudar?",
-      "poderia me mostrar o cardapio?"
+      "poderia me mostrar o cardapio?",
+      "cardapio",
+      "cardapio por favor",
+      "gostaria de ler o cardapio",
+      "o que tem para me mostrar?",
+      "me mostra o cardapio",
+      "por favor me mostra o cardapio?"
     ],
     "output": [
       "Bom, eu tenho um serviços disponivel na minha base de dados:\n Cardápio\n",
       "No momento eu posso lhe oeferecer o nosso Cardápio: ",
-      "Nosso cardápio atualmente tem:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?"
+      "Nosso cardápio atualmente tem:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?",
+      "Nosso cardápio atualmente tem:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?",
+      "Pedindo com educação até R$ 1.000,00 eu dou XD *ironia robótica*.\nNosso cardápio atualmente tem:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?",
+      "Ta na mão:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?",
+      "No momento eu posso lhe mostrar nosso cardapio somente",
+      "Peça por favor >:(",
+      "Claro meu bem, nosso cardápio é:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?"
     ]
   },
-  {"tag": "testeArquivo",
+  {"tag": "cardapio_escolhas",
     "input": [
-      "t",
-      "t",
-      "t"
+           "quais pizzas?", 
+           "quais sabores de pizza tem?",
+           "uma pizza doce por favor"
     ],
     "output": [
-      "rr",
-      "rr",
-      "rr"
-    ]
-  }
+            "Temos redondas e com recheio XD\nDoces\nSalgadas",
+            "Pizza sabor pizza :D espero que goste, receita secreta",
+            "Preparando uma pizza doce agorinha"
+    ],
+    "context_set": ""
+   }
 ]
 }

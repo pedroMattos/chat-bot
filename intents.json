@@ -1,6 +1,7 @@
 {"intents": [
         {"tag": "saudacoes",
-         "input": ["oi",
+         "input": [
+                 "oi",
                 "olá",
                 "hey",
                 "hello",
@@ -13,7 +14,8 @@
                 "boa tarde",
                 "boa noite"
         ],
-         "output": ["Olá! Como posso lhe ajudar?",
+         "output": [
+                 "Olá! Como posso lhe ajudar?",
                 "Oi! Tudo bem contigo? Espero que sim :) em que posso lhe ajudar?",
                 "Ho, let's go! Posso lhe ajudar em algo?",
                 "Hi there, how can I help? You would like to convert into english?",

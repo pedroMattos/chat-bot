@@ -86,8 +86,8 @@ class Sonny {
 
           fs.writeFileSync(dir + trained + '.json', JSON.stringify(net.toJSON()), (err, result) => {
             if (err) return console.log(err)
-            console.log('Treinamento finalizado para', trained)
           })
+          console.log('Treinamento finalizado para', trained)
         })
       })
     }
@@ -191,9 +191,9 @@ class Sonny {
 }
 
 // ambiente de teste
-let arrayIntents = ['greetings', 'cardapio_opcoes']
+let arrayIntents = ['greetings', 'cardapio_opcoes', 'cardapio_escolhas']
 
-let sonny = new Sonny(null, arrayIntents, 200)
+let sonny = new Sonny(null, arrayIntents)
 sonny.train()
 
 module.exports = {Sonny}

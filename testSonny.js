@@ -39,8 +39,11 @@ class Sonny {
 
     if (typeof option != 'string')
       this.Error = new Error('O parâmetro option deve ser uma String');
-    else if (option != 'learn')
-      this.Error = new Error('Opção inválida para o parâmetro option. opções disponíveis: "learn", "execute"');
+      // melhorar disparo de erro
+    // else if (option != 'learn')
+    //   this.Error = new Error('Opção inválida para o parâmetro option. opções disponíveis: "learn", "reteach"');
+    // else if (option != 'reteach')
+    //   this.Error = new Error('Opção inválida para o parâmetro option. opções disponíveis: "learn", "reteach"');
     if (!Array.isArray(intentTag)) {
       this.Error = new Error('O parâmetro intentTag deve ser um Array ou não pode estar vazio');
     } else {
@@ -96,7 +99,7 @@ class Sonny {
      * @param {String} task A task sempre deve ser igual ao valor da variável option
      * @returns
      */
-    Sonny.ExecuteTask = (task) => {
+    Sonny.ExecuteTask = (task, arrayOfIntents) => {
 
       // Lista as intents novas a serem adicionadas através do nome da tag
       let listOfIntents = Sonny.prototype.fileTypeAndExistChecker(this.intentTag).newIntentsToLearn
@@ -109,8 +112,9 @@ class Sonny {
           case 'learn':
             Sonny.prototype.trainMany(this.intentsDir, listOfIntents)
             break;
-          case 'execute':
-            return console.log('booting Sonny')
+          case 'reteach':
+            Sonny.prototype.RemoveExistingIntents(arrayOfIntents)
+            break;
           default:
             return console.log('learning...')
         }
@@ -150,6 +154,15 @@ class Sonny {
       return {newIntentsToLearn: newIntentsAvailable, existingIntents: blockedIntents}
     }
 
+    Sonny.prototype.RemoveExistingIntents = (arrayOfIntents) => {
+      console.log('Atualizando intents... por favor aguarde isso pode demorar vários minutos')
+      let reboot = new Sonny(null, arrayOfIntents, this.numberIterations, this.intentsDir)
+      for (let i = 0; i < arrayOfIntents.length; i++) {
+        fs.unlinkSync(this.intentsDir + arrayOfIntents[i] + '.json')
+        reboot.train()
+      }
+    }
+
     Sonny.prototype.BlankFile = async (file) => {
       let arrayOfIntents = []
       if (file.length > 0) {
@@ -179,11 +192,11 @@ class Sonny {
         }
       },
       // Treina Sonny com intentTag já existentes apagando as antigas
-      reTeach: (intentTag) => {
+      reTeach: () => {
         if (this.Error) {
           return Sonny.prototype.checkError(this.Error)
         } else {
-          Sonny.ExecuteTask(this.option, intentTag)
+          Sonny.ExecuteTask(this.option, this.intentTag)
         }
       },
     };
@@ -191,9 +204,10 @@ class Sonny {
 }
 
 // ambiente de teste
-let arrayIntents = ['greetings', 'cardapio_opcoes', 'cardapio_escolhas']
+let arrayIntents = ['cardapio_escolhas']
 
 let sonny = new Sonny(null, arrayIntents)
 sonny.train()
-
-module.exports = {Sonny}
+// sonny.reTeach()
+Sonny(null, arrayIntents)
+sonny.train()

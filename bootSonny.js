@@ -1,6 +1,7 @@
 const fs = require('fs')
 const readline = require('readline')
 const brain = require('brain.js');
+const os = require("os");
 // const {Sonny} = require('./testSonny')
 const net = new brain.recurrent.LSTM()
 
@@ -43,23 +44,51 @@ class BootSonny {
           rl.question('Me: ', (q) => {
             let sonnyBooted = new BootSonny
             let tagIntentDetected = BootSonny.GetContentFile(q)
-            fs.readFile(this.learnedIntentsDir + tagIntentDetected + '.json', (err, data) => {
-              if (err) return console.log(err)
-              net.fromJSON(JSON.parse(data.toString()))
-              console.log(`Sonny: ${net.run(q)}`)
+            if (tagIntentDetected != 'no-intent') {
+              fs.readFile(this.learnedIntentsDir + tagIntentDetected + '.json', (err, data) => {
+                if (err) return console.log(err)
+                net.fromJSON(JSON.parse(data.toString()))
+                console.log("\x1b[36m", `Sonny: ${net.run(q)}`)
+                sonnyBooted.boot()
+              })
+            } else {
+              console.log(`Sonny: Desculpe, não entendi o que quis dizer, mas salvei sua intenção de pergunta para me atualizar`)
               sonnyBooted.boot()
-            })
+            }
           })
         }
       }
     }
 
+    /**
+     * Função detecta qual arquivo de intents a resposta será direcionada, caso não encontre adiciona
+     * a pergunta ao txt intentsSugestion para posteriormente ser treinado com novas intents
+     * @param {string} question Parâmetro recebe o input do usuário e pesquisa para qual assunto aprendido para Sonny
+     * deve direcionar
+     * @returns {string}
+     */
     BootSonny.GetContentFile = (question) => {
+      let noIntent
+      let normalizeString = []
       let fileBuffer = fs.readFileSync(this.intentFileDir)
       let jsonFileContent = JSON.parse(fileBuffer.toString())
       for (let i = 0; i < jsonFileContent.intents.length; i++) {
+        jsonFileContent.intents[i].input.forEach(element => {
+          normalizeString.push(element.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))
+        });
         if (jsonFileContent.intents[i].input.indexOf(question) > -1) {
           return jsonFileContent.intents[i].tag
+        } else {
+          fs.open('intentsSugestion.txt', 'a', (e, id) => {
+            fs.write(id, question + os.EOL, null, 'utf8', () => [
+              fs.close(id, () => {
+                noIntent = true
+              })
+            ])
+          })
+          if (i == jsonFileContent.intents.length - 1) {
+            return 'no-intent'
+          }
         }
       }
     }

@@ -1,3 +1,7 @@
+// ESTA É A PRIMEIRA VERSÃO DE SONNY, USE À VONTADE, PORÉM PARA MELHOR EXPERIÊNCIA UTILIZE
+// testSonny.js e bootSonny.js PARA APRENDER E RODAR RESPECTIVAMENTE.
+// Documentação do brain.js: https://github.com/BrainJS/brain.js#brainjs
+
 const fs = require('fs')
 const readline = require('readline')
 const brain = require('brain.js')

@@ -17,7 +17,7 @@ const net = new brain.recurrent.LSTM()
 class Sonny {
   /**
    * @param {String} option Parâmetro obrigatório - este parãmetro espera ser uma das opções: 'learn',
-   * 'execute', ou null. Caso null por padrão será iniciada como 'learn'
+   * 'update', ou null. Caso null por padrão será iniciada como 'learn'
    * @param {Array<String>} intentTag Parâmetro obrigatório - o intentTag espera os nomes das tags na qual deve procurar
    * no intents.json, as opções dependem exclusivamente dos nomes dados a cada tag. Determinará quantos arquivos
    * de aprendizado serão criados
@@ -39,11 +39,8 @@ class Sonny {
 
     if (typeof option != 'string')
       this.Error = new Error('O parâmetro option deve ser uma String');
-      // melhorar disparo de erro
     // else if (option != 'learn')
-    //   this.Error = new Error('Opção inválida para o parâmetro option. opções disponíveis: "learn", "reteach"');
-    // else if (option != 'reteach')
-    //   this.Error = new Error('Opção inválida para o parâmetro option. opções disponíveis: "learn", "reteach"');
+    //   this.Error = new Error('Opção inválida para o parâmetro option. opções disponíveis: "learn", "execute"');
     if (!Array.isArray(intentTag)) {
       this.Error = new Error('O parâmetro intentTag deve ser um Array ou não pode estar vazio');
     } else {
@@ -68,30 +65,29 @@ class Sonny {
     Sonny.prototype.trainMany = (dir, intentTags) => {
       fs.readFile('testeIntents.json', (err, data) => {
         let jsonFile = JSON.parse(data.toString())
-        jsonFile.intents.forEach(element => {
+        for (let i = 0; i < jsonFile.intents.length; i++) {
           let inouts = []
           let trained = null
-          for (let i = 0; i < intentTags.length; i++) {
-            if (element.tag == intentTags[i]) {
-              trained = intentTags[i]
-              for (let j = 0; j < element.input.length; j++) {
-                inouts.push({
-                  input: element.input[j],
-                  output: element.output[j]
-                })
-              }
+          if (intentTags.indexOf(jsonFile.intents[i].tag) > -1) {
+            trained = jsonFile.intents[i].tag
+            for (let j = 0; j < jsonFile.intents[i].input.length; j++) {
+              inouts.push({
+                input: jsonFile.intents[i].input[j],
+                output: jsonFile.intents[i].output[j]
+              })
             }
-          }
-          net.train(inouts, {
-            log: true,
-            iterations: this.numberIterations
-          });
+            net.train(inouts, {
+              log: true,
+              iterations: this.numberIterations
+            });
 
-          fs.writeFileSync(dir + trained + '.json', JSON.stringify(net.toJSON()), (err, result) => {
-            if (err) return console.log(err)
-          })
-          console.log('Treinamento finalizado para', trained)
-        })
+            fs.writeFileSync(dir + trained + '.json', JSON.stringify(net.toJSON()), (err, result) => {
+              if (err) return console.log(err)
+            })
+            console.log('Treinamento finalizado para', trained)
+            intentTags.unshift()
+          }
+        }
       })
     }
 
@@ -106,13 +102,12 @@ class Sonny {
       // Lista intents já existentes no diretório de intents aprendidas
       let existingIntents = Sonny.prototype.fileTypeAndExistChecker(this.intentTag).existingIntents
 
-      // Bloqueia a execução enquanto houver uma intentTag com o mesmo nome de uma learned já existente
       Promise.resolve(Sonny.prototype.BlankFile(existingIntents)).then(() => {
         switch (task) {
           case 'learn':
             Sonny.prototype.trainMany(this.intentsDir, listOfIntents)
             break;
-          case 'reteach':
+          case 'update':
             Sonny.prototype.RemoveExistingIntents(arrayOfIntents)
             break;
           default:
@@ -138,19 +133,17 @@ class Sonny {
      */
     Sonny.prototype.fileTypeAndExistChecker = (nameIntents) => {
       let possibleExistingIntents = Sonny.FindLocalFiles(this.intentsDir)
+      let possibleExistingIntentsWithouExtension = []
       let newIntentsAvailable = []
       let blockedIntents = []
-      newIntentsAvailable = nameIntents.filter(intent => {
-        for (let i = 0; i < possibleExistingIntents.length; i++) {
-          if (possibleExistingIntents[i].split('.')[1] == 'json') {
-            if (possibleExistingIntents[i].split('.')[0] != intent) {
-              return intent
-            } else {
-              blockedIntents.push(intent)
-            }
-          }
+      possibleExistingIntents.forEach((el) => { possibleExistingIntentsWithouExtension.push(el.split('.')[0]) })
+      for (let i = 0; i < nameIntents.length; i++) {
+        if (possibleExistingIntentsWithouExtension.indexOf(nameIntents[i]) > -1) {
+          blockedIntents.push(nameIntents[i])
+        } else {
+          newIntentsAvailable.push(nameIntents[i])
         }
-      });
+      }
       return {newIntentsToLearn: newIntentsAvailable, existingIntents: blockedIntents}
     }
 
@@ -192,7 +185,7 @@ class Sonny {
         }
       },
       // Treina Sonny com intentTag já existentes apagando as antigas
-      reTeach: () => {
+      updateIntents: () => {
         if (this.Error) {
           return Sonny.prototype.checkError(this.Error)
         } else {
@@ -206,8 +199,8 @@ class Sonny {
 // ambiente de teste
 let arrayIntents = ['cardapio_escolhas']
 
-let sonny = new Sonny(null, arrayIntents)
-sonny.train()
-// sonny.reTeach()
-Sonny(null, arrayIntents)
-sonny.train()
+let sonny = new Sonny('update', arrayIntents, 200)
+// sonny.train()
+sonny.updateIntents()
+
+module.exports = {Sonny}

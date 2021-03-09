@@ -9,7 +9,7 @@ const net = new brain.recurrent.LSTM()
  * 
  * Esta classe cria treina um novo Sonny de acordo com as tags passadas da intent
  * @example
- *    new Sonny('execute', ['greetings', 'negative_intents'], 130000)
+ *    new Sonny('update', ['greetings', 'negative_intents'], 130000)
  *    new Sonny(null, ['greetings'])
  *    new Sonny(null, ['greetings'], 130000)
  */
@@ -86,6 +86,8 @@ class Sonny {
             })
             console.log('Treinamento finalizado para', trained)
             intentTags.unshift()
+          } else {
+            console.log('Uma ou mais intents não encontradas')
           }
         }
       })
@@ -147,6 +149,11 @@ class Sonny {
       return {newIntentsToLearn: newIntentsAvailable, existingIntents: blockedIntents}
     }
 
+
+    /**
+     * 
+     * @param {Array<String>} arrayOfIntents Recebe um array com as intents a serem atualizadas
+     */
     Sonny.prototype.RemoveExistingIntents = (arrayOfIntents) => {
       console.log('Atualizando intents... por favor aguarde isso pode demorar vários minutos')
       let reboot = new Sonny(null, arrayOfIntents, this.numberIterations, this.intentsDir)

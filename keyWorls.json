@@ -1,0 +1,21 @@
+{
+  "keyWords": [
+    {
+      "tag": "greetings",
+      "keys": [
+        "dia",
+        "noite",
+        "tarde",
+        "bem"
+      ]
+    },
+    {
+      "tag": "cardapio_opcoes",
+      "keys": [
+        "ajudar",
+        "ajuda",
+        "mostrar"
+      ]
+    }
+  ]
+}

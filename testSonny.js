@@ -1,7 +1,7 @@
 
 const fs = require('fs')
 const brain = require('brain.js')
-const net = new brain.recurrent.LSTM()
+const net = new brain.recurrent.LSTM( {hiddenLayers: [10,10]} )
 
 
 /**
@@ -165,17 +165,20 @@ class Sonny {
 
     Sonny.prototype.BlankFile = async (file) => {
       let arrayOfIntents = []
+      let learned = 0
       if (file.length > 0) {
         for (let i = 0; i < file.length; i++) {
           let fileBuffer = fs.readFileSync(this.intentsDir + file[i] + '.json')
           if (fileBuffer.toString() === '') {
             arrayOfIntents.push(file[i])
           } else {
-            // throw new Error(`As seguintes intents já foram aprendidas por Sonny '${file[i]}', 
-            // caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
+            learned ++
           }
         }
-        console.log(arrayOfIntents)
+        // if (learned > 0) {
+        //     throw new Error(`Uma ou mais Intents selecionadas já foram aprendidas por Sonny '${file}', 
+        //     caso queira treiná-las novamente execute-as na função 'new Sonny(option, intentTag).reTeach()'`)
+        // }
       } else {
         return;
       }
@@ -206,7 +209,7 @@ class Sonny {
 // ambiente de teste
 let arrayIntents = ['cardapio_escolhas']
 
-let sonny = new Sonny('update', arrayIntents, 200)
+let sonny = new Sonny('update', arrayIntents, 2000)
 // sonny.train()
 sonny.updateIntents()
 

@@ -79,14 +79,14 @@ class BootSonny {
         if (jsonFileContent.intents[i].input.indexOf(question) > -1) {
           return jsonFileContent.intents[i].tag
         } else {
-          fs.open('intentsSugestion.txt', 'a', (e, id) => {
-            fs.write(id, question + os.EOL, null, 'utf8', () => [
-              fs.close(id, () => {
-                noIntent = true
-              })
-            ])
-          })
           if (i == jsonFileContent.intents.length - 1) {
+            fs.open('intentsSugestion.txt', 'a', (e, id) => {
+              fs.write(id, question + os.EOL, null, 'utf8', () => [
+                fs.close(id, () => {
+                  noIntent = true
+                })
+              ])
+            })
             return 'no-intent'
           }
         }

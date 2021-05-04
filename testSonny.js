@@ -113,7 +113,7 @@ class Sonny {
             Sonny.prototype.RemoveExistingIntents(arrayOfIntents)
             break;
           default:
-            return console.log('learning...')
+            return console.log('Saindo...')
         }
       })
       // return console.log('executando tarefa', task)
@@ -207,10 +207,10 @@ class Sonny {
 }
 
 // ambiente de teste
-let arrayIntents = ['cardapio_escolhas']
+let arrayIntents = ['cardapio_opcoes', 'greetings']
 
-let sonny = new Sonny('update', arrayIntents, 2000)
-// sonny.train()
-sonny.updateIntents()
+let sonny = new Sonny('learn', arrayIntents)
+sonny.train()
+// sonny.updateIntents()
 
 module.exports = {Sonny}

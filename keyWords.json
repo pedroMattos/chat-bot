@@ -6,7 +6,8 @@
         "dia",
         "noite",
         "tarde",
-        "bem"
+        "bem",
+        "olá"
       ]
     },
     {
@@ -14,7 +15,8 @@
       "keys": [
         "ajudar",
         "ajuda",
-        "mostrar"
+        "mostrar",
+        "cardapio"
       ]
     }
   ]

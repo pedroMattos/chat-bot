@@ -107,3 +107,32 @@ let bSonny = new BootSonny()
 // let sonny = new Sonny(null, arrayIntents, 200)
 // sonny.train()
 bSonny.boot()
+// generateKaywords()
+function generateKaywords() {
+  let words = ''
+  let kWords = ''
+  let intentTags = []
+  fs.readFile('testeIntents.json', (err, data) => {
+    let jsonFile = JSON.parse(data.toString())
+    for (let i = 0; i < jsonFile.intents.length; i++) {
+      console.log(jsonFile.intents[i].tag)
+      for (let j = 0; j < jsonFile.intents[i].input.length; j++) {
+        kWords += spliter(jsonFile.intents[i].input[j].split(' ')) == undefined ? '' : 
+        spliter(jsonFile.intents[i].input[j].split(' '))
+      }
+      words += `${jsonFile.intents[i].tag}&${kWords}\n`
+    }
+    console.log(words)
+  })
+}
+
+function spliter(word) {
+  for (let i = 0; i < word.length; i++) {
+    if (word[i].length >= 3) {
+      console.log(word[i], 'palavra')
+      return word[i]
+    } else {
+      return
+    }
+  }
+}

@@ -42,15 +42,15 @@
       "por favor me mostra o cardapio?"
     ],
     "output": [
-      "Bom, eu tenho um serviços disponivel na minha base de dados:\n Cardápio\n",
-      "No momento eu posso lhe oeferecer o nosso Cardápio: ",
-      "Nosso cardápio atualmente tem:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?",
-      "Nosso cardápio atualmente tem:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?",
-      "Pedindo com educação até R$ 1.000,00 eu dou XD *ironia robótica*.\nNosso cardápio atualmente tem:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?",
-      "Ta na mão:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?",
+      "Bom, eu tenho um serviços disponivel na minha base de dados: Cardápio",
+      "No momento eu posso lhe oeferecer o nosso Cardápio ",
+      "Nosso cardápio atualmente tem: Pizza Macarrão Carnes com acompanhamentos O que gostaria de pedir?",
+      "Nosso cardápio atualmente tem: Pizza Macarrão Carnes com acompanhamentos O que gostaria de pedir?",
+      "Pedindo com educação até R$ 1.000,00 eu dou XD *ironia robótica*. Nosso cardápio atualmente tem: Pizza Macarrão Carnes com acompanhamentos O que gostaria de pedir?",
+      "Ta na mão: Pizza Macarrão Carnes com acompanhamentos O que gostaria de pedir?",
       "No momento eu posso lhe mostrar nosso cardapio somente",
       "Peça por favor >:(",
-      "Claro meu bem, nosso cardápio é:\n Pizza\nMacarrão\nCarnes com acompanhamentos\nO que gostaria de pedir?"
+      "Claro meu bem, nosso cardápio é: Pizza Macarrão Carnes com acompanhamentos O que gostaria de pedir?"
     ]
   },
   {"tag": "cardapio_escolhas",
@@ -60,7 +60,7 @@
            "uma pizza doce por favor"
     ],
     "output": [
-            "Temos redondas e com recheio XD\nDoces\nSalgadas",
+            "Temos redondas e com recheio XD Doces Salgadas",
             "Pizza sabor pizza :D espero que goste, receita secreta",
             "Preparando uma pizza doce agorinha"
     ]
